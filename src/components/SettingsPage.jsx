@@ -43,12 +43,6 @@ export default function SettingsPage({ closeSettings }) {
           <CardTitle className="flex items-center gap-2 text-lg">
             <Settings className="w-6 h-6" /> Settings
           </CardTitle>
-          <Button
-            onClick={closeSettings}
-            className="flex items-center gap-2 bg-white text-blue-600 hover:bg-gray-100 px-3 py-2 rounded-md"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back
-          </Button>
         </CardHeader>
 
         {/* Content */}
