@@ -20,9 +20,9 @@ export default function Home() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    if (s3Path.trim() !== "") {
-      navigate(`/metadata?s3Path=${encodeURIComponent(s3Path)}`);
-    }
+    // if (s3Path.trim() !== "") {
+    navigate(`/metadata?s3Path=${encodeURIComponent(s3Path)}`);
+    // }
   };
 
   const cloudProviders = [
