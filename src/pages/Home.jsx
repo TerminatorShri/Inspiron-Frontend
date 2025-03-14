@@ -8,12 +8,15 @@ import { Badge } from "@/components/ui/badge";
 import AwsLogo from "@/assets/aws.svg";
 import AzureLogo from "@/assets/azure.svg";
 import MinioLogo from "@/assets/minio.svg";
+import CloudflareLogo from "@/assets/cloudflare.png";
 
 export default function Home() {
+  const [selectedProvider, setSelectedProvider] = useState("");
   const [s3Path, setS3Path] = useState("");
   const [bucketName, setBucketName] = useState("");
   const [region, setRegion] = useState("");
-  const [accessKey, setAccessKey] = useState("");
+  const [accessKeyId, setAccessKeyId] = useState("");
+  const [secretAccessKey, setSecretAccessKey] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -21,6 +24,13 @@ export default function Home() {
       navigate(`/metadata?s3Path=${encodeURIComponent(s3Path)}`);
     }
   };
+
+  const cloudProviders = [
+    { id: "aws", name: "AWS", logo: AwsLogo },
+    { id: "azure", name: "Azure", logo: AzureLogo },
+    { id: "cloudflare", name: "Cloudflare R2", logo: CloudflareLogo },
+    { id: "custom", name: "Custom", logo: MinioLogo },
+  ];
 
   return (
     <div className="h-screen flex flex-col items-center justify-center bg-gray-100 p-10 space-y-6">
@@ -39,38 +49,45 @@ export default function Home() {
       {/* Lower Half: Icon Cloud + Cloud Badges + Input Fields */}
       <Card className="w-full max-w-5xl bg-white shadow-lg rounded-lg p-6">
         <CardContent className="flex items-center">
-          {" "}
-          {/* ✅ Align items center */}
           {/* Left: Icon Cloud */}
           <div className="w-1/2 flex items-center justify-center">
             <IconCloudDemo />
           </div>
           {/* Right: Cloud Provider Badges & Input Fields */}
           <div className="w-1/2 flex flex-col justify-center pl-6">
-            {" "}
-            {/* ✅ Center aligned */}
             {/* Cloud Badges */}
-            <div className="flex gap-3 mb-6">
-              <Badge className="px-4 py-3 text-lg font-medium bg-white border border-gray-300 text-gray-700 flex items-center gap-2 shadow-sm">
-                <img src={AwsLogo} alt="AWS" className="h-5 w-5" />
-                AWS
-              </Badge>
-              <Badge className="px-4 py-3 text-lg font-medium bg-white border border-gray-300 text-gray-700 flex items-center gap-2 shadow-sm">
-                <img src={AzureLogo} alt="Azure" className="h-5 w-5" />
-                Azure
-              </Badge>
-              <Badge className="px-4 py-3 text-lg font-medium bg-white border border-gray-300 text-gray-700 flex items-center gap-2 shadow-sm">
-                <img src={MinioLogo} alt="Minio" className="h-5 w-5" />
-                Minio
-              </Badge>
+            <div className="flex gap-3 mb-6 flex-wrap">
+              {cloudProviders.map((provider) => (
+                <Badge
+                  key={provider.id}
+                  className={`px-4 py-3 text-lg font-medium border cursor-pointer flex items-center gap-2 shadow-sm
+                    transition-colors duration-200
+                    ${
+                      selectedProvider === provider.id
+                        ? "bg-blue-100 border-blue-500 text-blue-700"
+                        : "bg-white border-gray-300 text-gray-700 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600"
+                    }`}
+                  onClick={() => setSelectedProvider(provider.id)}
+                >
+                  <img
+                    src={provider.logo}
+                    alt={provider.name}
+                    className="h-5 w-5"
+                  />
+                  {provider.name}
+                </Badge>
+              ))}
             </div>
             {/* Input Fields */}
             <div className="grid grid-cols-2 gap-4">
-              <Input
-                placeholder="Enter S3 Path (AWS/Minio)"
-                value={s3Path}
-                onChange={(e) => setS3Path(e.target.value)}
-              />
+              {selectedProvider === "custom" && (
+                <Input
+                  placeholder="Enter URL for S3-compatible storage"
+                  value={s3Path}
+                  onChange={(e) => setS3Path(e.target.value)}
+                  className="col-span-2"
+                />
+              )}
               <Input
                 placeholder="Bucket Name"
                 value={bucketName}
@@ -82,9 +99,15 @@ export default function Home() {
                 onChange={(e) => setRegion(e.target.value)}
               />
               <Input
-                placeholder="Access Key"
-                value={accessKey}
-                onChange={(e) => setAccessKey(e.target.value)}
+                placeholder="Access Key ID"
+                value={accessKeyId}
+                onChange={(e) => setAccessKeyId(e.target.value)}
+              />
+              <Input
+                placeholder="Secret Access Key"
+                type="password"
+                value={secretAccessKey}
+                onChange={(e) => setSecretAccessKey(e.target.value)}
               />
             </div>
             {/* Explore Button */}
