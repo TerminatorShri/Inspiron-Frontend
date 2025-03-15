@@ -51,7 +51,7 @@ export default function TableSchema() {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <h2 className="text-3xl font-bold mb-6 flex items-center gap-2 text-gray-800">
-        <TableIcon className="w-8 h-8 text-blue-600" /> Table Schema: Sales (Latest)
+        <TableIcon className="w-8 h-8 text-blue-600" /> Table Schema: Sales 
       </h2>
 
       {/* SQL Workbench Style Table */}
@@ -139,6 +139,7 @@ export default function TableSchema() {
           </TableBody>
         </Table>
       </div>
+      
     </div>
   );
 }

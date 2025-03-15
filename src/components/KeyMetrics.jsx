@@ -86,7 +86,7 @@ export default function KeyMetrics() {
       {smallFiles.length > 0 && (
         <div className="bg-red-50 shadow-lg rounded-lg p-4 border border-red-300 mt-6">
           <h3 className="text-xl font-semibold text-red-700 mb-3 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5" /> Small Files
+            <AlertTriangle className="w-5 h-5" /> Small File Overhead
           </h3>
           <ul className="list-disc pl-6 text-red-600">
             {smallFiles.map(file => (

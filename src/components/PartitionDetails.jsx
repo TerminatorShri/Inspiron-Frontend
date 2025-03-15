@@ -26,7 +26,7 @@ export default function PartitionDetails() {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <h2 className="text-3xl font-bold mb-6 flex items-center gap-2 text-gray-800">
-        <TableIcon className="w-8 h-8 text-blue-600" /> Partition Details (Latest)
+        <TableIcon className="w-8 h-8 text-blue-600" /> Partition Details 
       </h2>
 
       {/* Partition Details Table */}
