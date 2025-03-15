@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Telescope, Sparkles, Server, Rocket } from "lucide-react";
+import { Telescope, Sparkles, Rocket } from "lucide-react";
 import AwsLogo from "@/assets/aws.svg";
 import AzureLogo from "@/assets/azure.svg";
 import MinioLogo from "@/assets/minio.svg";
@@ -36,32 +36,39 @@ export default function Home() {
       <Sparkles className="absolute top-10 left-10 w-20 h-20 text-indigo-300 opacity-63 animate-pulse" />
       <Rocket className="absolute bottom-10 right-10 w-16 h-16 text-indigo-300 animate-zoom" />
 
-      <Card className="w-full max-w-5xl bg-white shadow-xl rounded-3xl p-8 relative">
+      {/* Upper Card - MetaLens Info */}
+      <Card className="w-full max-w-6xl bg-white shadow-xl rounded-3xl p-10 relative">
         <CardContent className="text-center flex items-center justify-center gap-4">
-          <Telescope className="w-10 h-10 text-blue-600 animate-bounce" />
-          <h1 className="text-5xl font-bold text-gray-800 rowdy-font">MetaLens</h1>
+          <Telescope className="w-10 h-10 text-blue-600" />
+          <h1 className="text-5xl font-bold text-gray-800 rowdy-font">
+            MetaLens
+          </h1>
         </CardContent>
         <CardContent className="text-center">
           <p className="text-lg text-gray-700 mt-4 tajawal-font font-semibold">
-            A seamless metadata exploration tool powered by Trino. Easily connect
-            to S3-compatible storage, build queries, and extract insights
-            without writing a single line of code.
+            A seamless metadata exploration tool powered by Trino. Easily
+            connect to S3-compatible storage, build queries, and extract
+            insights without writing a single line of code.
           </p>
         </CardContent>
       </Card>
 
-      <Card className="w-full max-w-5xl bg-white shadow-xl rounded-3xl p-8 relative">
+      {/* Lower Card - Icon Cloud & Cloud Provider Inputs */}
+      <Card className="w-full max-w-6xl bg-white shadow-xl rounded-3xl p-10 relative">
         <CardContent className="flex items-center">
+          {/* Left: Icon Cloud */}
           <div className="w-1/2 flex items-center justify-center relative">
             <IconCloudDemo className="animate-fade-in" />
           </div>
 
+          {/* Right: Cloud Provider Selection & Inputs */}
           <div className="w-1/2 flex flex-col justify-center pl-6 space-y-6">
-            <div className="flex gap-3 mb-4 flex-wrap">
+            {/* Cloud Provider Badges */}
+            <div className="flex gap-3 mb-4 flex-nowrap overflow-hidden">
               {cloudProviders.map((provider) => (
                 <Badge
                   key={provider.id}
-                  className={`tajawal-font px-4 py-3 text-base font-medium border cursor-pointer flex items-center gap-2 shadow-md rounded-xl transition-transform transform hover:scale-105
+                  className={`tajawal-font px-4 py-3 text-base font-medium border cursor-pointer flex items-center gap-2 shadow-md rounded-xl transition-transform transform hover:scale-105 whitespace-nowrap
                     ${
                       selectedProvider === provider.id
                         ? "bg-blue-100 border-blue-500 text-blue-700"
@@ -74,12 +81,17 @@ export default function Home() {
                     }),
                   }}
                 >
-                  <img src={provider.logo} alt={provider.name} className="h-6 w-6" />
+                  <img
+                    src={provider.logo}
+                    alt={provider.name}
+                    className="h-6 w-6"
+                  />
                   {provider.name}
                 </Badge>
               ))}
             </div>
 
+            {/* Input Fields */}
             <div className="grid grid-cols-2 gap-4 kanit-regular">
               {selectedProvider === "custom" && (
                 <Input
@@ -89,14 +101,39 @@ export default function Home() {
                   className="col-span-2 shadow-md rounded-lg"
                 />
               )}
-              <Input placeholder="Bucket Name" value={bucketName} onChange={(e) => setBucketName(e.target.value)} className="shadow-md rounded-lg" />
-              <Input placeholder="Region" value={region} onChange={(e) => setRegion(e.target.value)} className="shadow-md rounded-lg" />
-              <Input placeholder="Access Key ID" value={accessKeyId} onChange={(e) => setAccessKeyId(e.target.value)} className="shadow-md rounded-lg" />
-              <Input placeholder="Secret Access Key" type="password" value={secretAccessKey} onChange={(e) => setSecretAccessKey(e.target.value)} className="shadow-md rounded-lg" />
+              <Input
+                placeholder="Bucket Name"
+                value={bucketName}
+                onChange={(e) => setBucketName(e.target.value)}
+                className="shadow-md rounded-lg"
+              />
+              <Input
+                placeholder="Region"
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
+                className="shadow-md rounded-lg"
+              />
+              <Input
+                placeholder="Access Key ID"
+                value={accessKeyId}
+                onChange={(e) => setAccessKeyId(e.target.value)}
+                className="shadow-md rounded-lg"
+              />
+              <Input
+                placeholder="Secret Access Key"
+                type="password"
+                value={secretAccessKey}
+                onChange={(e) => setSecretAccessKey(e.target.value)}
+                className="shadow-md rounded-lg"
+              />
             </div>
 
+            {/* Explore Button */}
             <div className="flex justify-center mt-6">
-              <Button onClick={handleSubmit} className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-full text-lg kanit-semibold shadow-lg transform transition-transform hover:scale-105">
+              <Button
+                onClick={handleSubmit}
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-md text-lg kanit-semibold shadow-lg transform transition-transform hover:scale-105"
+              >
                 Explore Metadata
               </Button>
             </div>
