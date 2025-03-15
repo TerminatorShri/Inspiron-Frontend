@@ -76,7 +76,8 @@ export default function Sidebar({
     <div className="w-80 bg-gray-900 text-white p-4 flex flex-col h-screen">
       {/* App Title */}
       <div className="text-2xl font-bold text-white text-center pb-4 border-b border-gray-700 flex items-center justify-center gap-2">
-        <Telescope className="w-6 h-6 text-blue-400" /> MetaLens
+        <Telescope className="w-6 h-6 text-blue-400" />{" "}
+        <span className="rowdy-font">MetaLens</span>
       </div>
 
       <div className="flex-grow overflow-y-auto mt-4 scrollbar-thin scrollbar-thumb-blue-500 scroll-smooth">
