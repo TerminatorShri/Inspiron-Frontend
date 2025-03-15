@@ -68,7 +68,7 @@ export default function Home() {
               {cloudProviders.map((provider) => (
                 <Badge
                   key={provider.id}
-                  className={`tajawal-font px-4 py-3 text-base font-medium border cursor-pointer flex items-center gap-2 shadow-md rounded-xl transition-transform transform hover:scale-105 whitespace-nowrap
+                  className={`tajawal-font px-4 py-3 text-base font-medium border cursor-pointer flex items-center gap-2 shadow-md rounded-xl whitespace-nowrap
                     ${
                       selectedProvider === provider.id
                         ? "bg-blue-100 border-blue-500 text-blue-700"
