@@ -77,7 +77,7 @@ export default function Versioning() {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
+      <h2 className="text-3xl font-bold mb-6 flex items-center gap-2 jet-brains-mono">
         <FileDiff className="w-8 h-8 text-blue-500" /> Versioning & Snapshots:
         Sales
       </h2>
@@ -125,10 +125,10 @@ export default function Versioning() {
       <div className="grid grid-cols-2 gap-4">
         {/* Version 1 Schema */}
         <div className="bg-white shadow-md rounded-lg p-4">
-          <h3 className="text-lg font-semibold mb-3">
+          <h3 className="text-lg font-semibold mb-3 oxygen-mono-font">
             {version1.label} Schema
           </h3>
-          <div className="border p-4 rounded-md bg-gray-900 text-white font-mono">
+          <div className="border p-4 rounded-md bg-white text-black font-mono">
             {version1.schema.map((field) => (
               <div key={field.name} className="py-1">
                 {field.name}: {field.type}
@@ -139,10 +139,10 @@ export default function Versioning() {
 
         {/* Version 2 Schema */}
         <div className="bg-white shadow-md rounded-lg p-4">
-          <h3 className="text-lg font-semibold mb-3">
+          <h3 className="text-lg font-semibold mb-3 oxygen-mono-font">
             {version2.label} Schema
           </h3>
-          <div className="border p-4 rounded-md bg-gray-900 text-white font-mono">
+          <div className="border p-4 rounded-md bg-white text-black font-mono">
             {version2.schema.map((field) => (
               <div key={field.name} className="py-1">
                 {field.name}: {field.type}
@@ -154,19 +154,21 @@ export default function Versioning() {
 
       {/* Changes Highlighting */}
       <div className="bg-white shadow-md rounded-lg p-4 mt-6">
-        <h3 className="text-lg font-semibold mb-3">Schema Changes</h3>
-        <div className="border p-4 rounded-md bg-gray-900 text-white font-mono">
+        <h3 className="text-lg font-semibold mb-3 oxygen-mono-font">
+          Schema Changes
+        </h3>
+        <div className="border p-4 rounded-md bg-white text-black font-mono">
           {changes.map((change) => (
             <div
               key={change.name}
               className={`py-1 px-2 rounded-md ${
                 change.status === "removed"
-                  ? "bg-red-700"
+                  ? "bg-red-200 text-red-900"
                   : change.status === "added"
-                  ? "bg-green-700"
+                  ? "bg-green-200 text-green-900"
                   : change.status === "modified"
-                  ? "bg-yellow-700"
-                  : "bg-transparent"
+                  ? "bg-yellow-200 text-yellow-900"
+                  : "bg-white"
               }`}
             >
               {change.status === "removed" && "- "}
