@@ -14,14 +14,13 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { FileText, Database, FolderOpen } from "lucide-react";
+import PartitionDetails from "./PartitionDetails";
 
 export default function TableProperties() {
   // Dummy table properties for Sales Table
   const properties = [
     { name: "Table Format", value: "Iceberg" },
     { name: "Storage Location", value: "s3://company-data/sales/" },
-    { name: "Compaction Strategy", value: "Snapshot-based" },
-    { name: "Partitioning Strategy", value: "By sale_date (Monthly)" },
   ];
 
   const manifestFiles = [
@@ -73,10 +72,12 @@ export default function TableProperties() {
               ))}
             </AccordionContent>
           </AccordionItem>
-
-          {/* Transaction Logs */}
-         
         </Accordion>
+
+        {/* Increased gap between the last accordion and PartitionDetails */}
+        <div className="mt-20">
+          <PartitionDetails />
+        </div>
       </div>
     </div>
   );

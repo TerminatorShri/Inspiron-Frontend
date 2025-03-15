@@ -107,14 +107,7 @@ export default function SettingsPage({ closeSettings }) {
             />
           </div>
 
-          {/* Email Updates Toggle */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Mail className="w-6 h-6 text-blue-500" />
-              <span className="text-lg font-medium">Receive Email Updates</span>
-            </div>
-            <Switch checked={emailUpdates} onCheckedChange={setEmailUpdates} />
-          </div>
+        
 
           {/* Save Button */}
           <div className="flex justify-end">

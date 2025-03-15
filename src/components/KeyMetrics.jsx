@@ -7,7 +7,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Database, BarChart, File, HardDriveDownload } from "lucide-react";
+import { Database, BarChart, File, HardDriveDownload, AlertTriangle } from "lucide-react";
 
 export default function KeyMetrics() {
   const metrics = {
@@ -24,13 +24,15 @@ export default function KeyMetrics() {
     { name: "0002.parquet", size: "450 MB", rows: 900_000 },
     { name: "0003.parquet", size: "350 MB", rows: 750_000 },
     { name: "0004.parquet", size: "300 MB", rows: 500_000 },
-    { name: "0005.parquet", size: "200 MB", rows: 350_000 },
+    { name: "0005.parquet", size: "80 MB", rows: 120_000 },
   ];
+
+  const smallFiles = fileStats.filter(file => parseInt(file.size) < 100);
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <h2 className="text-3xl font-bold mb-6 flex items-center gap-2 text-gray-800">
-        <BarChart className="w-8 h-8 text-blue-600" /> Key Metrics (Latest)
+        <BarChart className="w-8 h-8 text-blue-600" /> Key Metrics 
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -55,8 +57,6 @@ export default function KeyMetrics() {
             {metrics.totalFileSize}
           </CardContent>
         </Card>
-
-        
       </div>
 
       <div className="bg-white shadow-lg rounded-lg p-4 border border-gray-300 mt-6">
@@ -82,6 +82,19 @@ export default function KeyMetrics() {
           </TableBody>
         </Table>
       </div>
+
+      {smallFiles.length > 0 && (
+        <div className="bg-red-50 shadow-lg rounded-lg p-4 border border-red-300 mt-6">
+          <h3 className="text-xl font-semibold text-red-700 mb-3 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5" /> Small File Overhead
+          </h3>
+          <ul className="list-disc pl-6 text-red-600">
+            {smallFiles.map(file => (
+              <li key={file.name}>{file.name} - {file.size}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
