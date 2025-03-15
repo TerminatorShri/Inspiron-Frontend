@@ -77,15 +77,15 @@ export default function Versioning() {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <h2 className="text-3xl font-bold mb-6 flex items-center gap-2 jet-brains-mono">
-        <FileDiff className="w-8 h-8 text-blue-500" /> Versioning & Snapshots:
-        Sales
+      <h2 className="text-3xl mb-6 flex items-center gap-2">
+        <FileDiff className="w-8 h-8 text-blue-500 kanit-extrabold" />{" "}
+        Versioning & Snapshots: Sales
       </h2>
 
       {/* Dropdowns to Select Versions */}
-      <div className="flex gap-4 mb-6">
+      <div className="flex gap-4 mb-6 oxygen-light">
         <div className="flex flex-col">
-          <label className="font-semibold text-gray-700">
+          <label className="font-semibold text-gray-700 mb-1">
             Compare Version 1
           </label>
           <Select value={selectedVersion1} onValueChange={setSelectedVersion1}>
@@ -103,7 +103,7 @@ export default function Versioning() {
         </div>
 
         <div className="flex flex-col">
-          <label className="font-semibold text-gray-700">
+          <label className="font-semibold text-gray-700 mb-1">
             Compare Version 2
           </label>
           <Select value={selectedVersion2} onValueChange={setSelectedVersion2}>
@@ -125,7 +125,7 @@ export default function Versioning() {
       <div className="grid grid-cols-2 gap-4">
         {/* Version 1 Schema */}
         <div className="bg-white shadow-md rounded-lg p-4">
-          <h3 className="text-lg font-semibold mb-3 oxygen-mono-font">
+          <h3 className="text-lg font-semibold mb-3 oxygen-bold">
             {version1.label} Schema
           </h3>
           <div className="border p-4 rounded-md bg-white text-black font-mono">
@@ -139,7 +139,7 @@ export default function Versioning() {
 
         {/* Version 2 Schema */}
         <div className="bg-white shadow-md rounded-lg p-4">
-          <h3 className="text-lg font-semibold mb-3 oxygen-mono-font">
+          <h3 className="text-lg font-semibold mb-3 oxygen-bold">
             {version2.label} Schema
           </h3>
           <div className="border p-4 rounded-md bg-white text-black font-mono">
@@ -154,7 +154,7 @@ export default function Versioning() {
 
       {/* Changes Highlighting */}
       <div className="bg-white shadow-md rounded-lg p-4 mt-6">
-        <h3 className="text-lg font-semibold mb-3 oxygen-mono-font">
+        <h3 className="text-lg font-semibold mb-3 oxygen-bold">
           Schema Changes
         </h3>
         <div className="border p-4 rounded-md bg-white text-black font-mono">

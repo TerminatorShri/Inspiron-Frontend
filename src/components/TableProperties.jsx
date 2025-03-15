@@ -34,8 +34,9 @@ export default function TableProperties() {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
-        <Database className="w-8 h-8 text-blue-500" /> Table Properties: Sales
+      <h2 className="text-3xl mb-6 flex items-center gap-2">
+        <Database className="w-8 h-8 text-blue-500 kanit-extrabold" /> Table
+        Properties: Sales
       </h2>
 
       {/* Cards for Key Properties */}
@@ -43,9 +44,9 @@ export default function TableProperties() {
         {properties.map((prop) => (
           <Card key={prop.name} className="shadow-lg border">
             <CardHeader className="bg-blue-100 rounded-t-lg p-3">
-              <CardTitle className="text-blue-700">{prop.name}</CardTitle>
+              <CardTitle className="text-blue-700 oxygen-bold">{prop.name}</CardTitle>
             </CardHeader>
-            <CardContent className="p-4">
+            <CardContent className="p-4 oxygen-light">
               <p className="text-gray-700">{prop.value}</p>
             </CardContent>
           </Card>
@@ -57,7 +58,7 @@ export default function TableProperties() {
         <Accordion type="multiple">
           {/* Manifest Files */}
           <AccordionItem value="manifest">
-            <AccordionTrigger className="text-lg font-semibold flex items-center gap-2">
+            <AccordionTrigger className="text-lg flex items-center gap-2 kanit-regular">
               <FolderOpen className="w-5 h-5 text-blue-600" />
               Manifest Files
             </AccordionTrigger>

@@ -101,8 +101,9 @@ export default function TableSchema() {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <h2 className="text-3xl font-bold mb-6 flex items-center gap-2 text-gray-800">
-        <TableIcon className="w-8 h-8 text-blue-600" /> Table Schema: Sales 
+      <h2 className="text-3xl mb-6 flex items-center gap-2 text-gray-800">
+        <TableIcon className="w-8 h-8 text-blue-600 kanit-extrabold" /> Table
+        Schema: Sales
       </h2>
 
       {/* SQL Workbench Style Table */}
@@ -150,7 +151,7 @@ export default function TableSchema() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
         <Card className="shadow-md border">
           <CardHeader className="bg-blue-100 rounded-t-lg p-3">
-            <CardTitle className="text-blue-700 flex items-center gap-2">
+            <CardTitle className="text-blue-700 flex items-center gap-2 oxygen-bold">
               <Columns className="w-5 h-5" /> Partition Keys
             </CardTitle>
           </CardHeader>
@@ -161,7 +162,7 @@ export default function TableSchema() {
 
         <Card className="shadow-md border">
           <CardHeader className="bg-green-100 rounded-t-lg p-3">
-            <CardTitle className="text-green-700 flex items-center gap-2">
+            <CardTitle className="text-green-700 flex items-center gap-2 oxygen-bold">
               <Key className="w-5 h-5" /> Primary Key
             </CardTitle>
           </CardHeader>
@@ -175,7 +176,8 @@ export default function TableSchema() {
       <div className="bg-white shadow-lg rounded-lg p-4 mt-6 border border-gray-300">
         <div className="flex justify-between items-center mb-3">
           <h3 className="text-xl font-semibold flex items-center gap-2 text-gray-800">
-            <Database className="w-6 h-6 text-blue-600" /> Sample Data (Latest)
+            <Database className="w-6 h-6 text-blue-600 oxygen-regular" /> Sample
+            Data (Latest)
           </h3>
           <Button
             onClick={handleDownload}
@@ -215,7 +217,6 @@ export default function TableSchema() {
           </TableBody>
         </Table>
       </div>
-      
     </div>
   );
 }
