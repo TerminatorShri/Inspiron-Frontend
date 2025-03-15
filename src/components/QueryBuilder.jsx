@@ -219,10 +219,15 @@ export default function QueryBuilder() {
       <div className="fixed bottom-8 right-8">
         <Badge
           variant="outline"
-          className="px-4 py-2 text-sm flex items-center gap-2 border-gray-400 bg-white shadow-lg rounded-xl"
+          className="px-4 py-2 text-base flex items-center gap-2 border-gray-400 bg-white shadow-lg rounded-xl"
         >
-          Powered by 
-          <img src={TrinoLogo} alt="Trino Logo" className="h-5 w-auto" />
+          <span className="text-lg font-semibold">Powered by</span>
+          <img
+            src={TrinoLogo}
+            alt="Trino Logo"
+            className="w-auto"
+            style={{ height: "35px" }}
+          />
         </Badge>
       </div>
     </div>
