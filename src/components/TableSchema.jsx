@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner"; 
+import { toast } from "sonner";
 import {
   FileText,
   Key,
@@ -23,27 +23,78 @@ export default function TableSchema() {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const schema = [
-    { name: "sale_id", type: "INT", nullable: false, description: "Unique sale identifier" },
-    { name: "customer", type: "TEXT", nullable: false, description: "Customer name" },
-    { name: "amount", type: "DOUBLE", nullable: false, description: "Total sale amount" },
-    { name: "sale_date", type: "DATE", nullable: false, description: "Date of the sale" },
-    { name: "discount", type: "FLOAT", nullable: true, description: "Discount applied (if any)" },
-    { name: "tax", type: "DOUBLE", nullable: true, description: "Tax amount on the sale" },
+    {
+      name: "sale_id",
+      type: "INT",
+      nullable: false,
+      description: "Unique sale identifier",
+    },
+    {
+      name: "customer",
+      type: "TEXT",
+      nullable: false,
+      description: "Customer name",
+    },
+    {
+      name: "amount",
+      type: "DOUBLE",
+      nullable: false,
+      description: "Total sale amount",
+    },
+    {
+      name: "sale_date",
+      type: "DATE",
+      nullable: false,
+      description: "Date of the sale",
+    },
+    {
+      name: "discount",
+      type: "FLOAT",
+      nullable: true,
+      description: "Discount applied (if any)",
+    },
+    {
+      name: "tax",
+      type: "DOUBLE",
+      nullable: true,
+      description: "Tax amount on the sale",
+    },
   ];
 
   const partitionKeys = ["sale_date"];
   const primaryKey = ["sale_id"];
 
   const sampleData = [
-    { sale_id: 1001, customer: "Alice", amount: 250.75, sale_date: "2025-03-10", discount: 10.0, tax: 5.0 },
-    { sale_id: 1002, customer: "Bob", amount: 125.5, sale_date: "2025-03-10", discount: 5.0, tax: 2.5 },
-    { sale_id: 1003, customer: "Charlie", amount: 89.99, sale_date: "2025-03-11", discount: 0.0, tax: 4.0 },
+    {
+      sale_id: 1001,
+      customer: "Alice",
+      amount: 250.75,
+      sale_date: "2025-03-10",
+      discount: 10.0,
+      tax: 5.0,
+    },
+    {
+      sale_id: 1002,
+      customer: "Bob",
+      amount: 125.5,
+      sale_date: "2025-03-10",
+      discount: 5.0,
+      tax: 2.5,
+    },
+    {
+      sale_id: 1003,
+      customer: "Charlie",
+      amount: 89.99,
+      sale_date: "2025-03-11",
+      discount: 0.0,
+      tax: 4.0,
+    },
   ];
 
   const handleDownload = () => {
     setIsDownloading(true);
     setTimeout(() => {
-      toast.success("Excel file downloaded successfully!"); 
+      toast.success("Excel file downloaded successfully!");
       setIsDownloading(false);
     }, 500);
   };
@@ -51,7 +102,7 @@ export default function TableSchema() {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <h2 className="text-3xl font-bold mb-6 flex items-center gap-2 text-gray-800">
-        <TableIcon className="w-8 h-8 text-blue-600" /> Table Schema: Sales (Latest)
+        <TableIcon className="w-8 h-8 text-blue-600" /> Table Schema: Sales
       </h2>
 
       {/* SQL Workbench Style Table */}
@@ -59,21 +110,36 @@ export default function TableSchema() {
         <Table className="border-collapse w-full">
           <TableHeader>
             <TableRow className="bg-gray-100 border-b-2 border-gray-300">
-              <TableHead className="font-mono text-sm px-4 py-2 border-r">Column Name</TableHead>
-              <TableHead className="font-mono text-sm px-4 py-2 border-r">Data Type</TableHead>
-              <TableHead className="font-mono text-sm px-4 py-2 border-r">Nullable</TableHead>
-              <TableHead className="font-mono text-sm px-4 py-2">Description</TableHead>
+              <TableHead className="font-mono text-sm px-4 py-2 border-r">
+                Column Name
+              </TableHead>
+              <TableHead className="font-mono text-sm px-4 py-2 border-r">
+                Data Type
+              </TableHead>
+              <TableHead className="font-mono text-sm px-4 py-2 border-r">
+                Nullable
+              </TableHead>
+              <TableHead className="font-mono text-sm px-4 py-2">
+                Description
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {schema.map((col) => (
               <TableRow key={col.name} className="border-b border-gray-300">
                 <TableCell className="font-mono text-sm px-4 py-2 border-r text-blue-700">
-                  <FileText className="w-4 h-4 inline-block mr-2 text-blue-600" /> {col.name}
+                  <FileText className="w-4 h-4 inline-block mr-2 text-blue-600" />{" "}
+                  {col.name}
                 </TableCell>
-                <TableCell className="font-mono text-sm px-4 py-2 border-r">{col.type}</TableCell>
-                <TableCell className="font-mono text-sm px-4 py-2 border-r">{col.nullable ? "YES" : "NO"}</TableCell>
-                <TableCell className="text-sm px-4 py-2">{col.description}</TableCell>
+                <TableCell className="font-mono text-sm px-4 py-2 border-r">
+                  {col.type}
+                </TableCell>
+                <TableCell className="font-mono text-sm px-4 py-2 border-r">
+                  {col.nullable ? "YES" : "NO"}
+                </TableCell>
+                <TableCell className="text-sm px-4 py-2">
+                  {col.description}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -124,7 +190,12 @@ export default function TableSchema() {
           <TableHeader>
             <TableRow className="bg-gray-100 border-b-2 border-gray-300">
               {Object.keys(sampleData[0]).map((col) => (
-                <TableHead key={col} className="font-mono text-sm px-4 py-2 border-r">{col}</TableHead>
+                <TableHead
+                  key={col}
+                  className="font-mono text-sm px-4 py-2 border-r"
+                >
+                  {col}
+                </TableHead>
               ))}
             </TableRow>
           </TableHeader>
@@ -132,7 +203,12 @@ export default function TableSchema() {
             {sampleData.map((row, index) => (
               <TableRow key={index} className="border-b border-gray-300">
                 {Object.values(row).map((value, i) => (
-                  <TableCell key={i} className="font-mono text-sm px-4 py-2 border-r">{value}</TableCell>
+                  <TableCell
+                    key={i}
+                    className="font-mono text-sm px-4 py-2 border-r"
+                  >
+                    {value}
+                  </TableCell>
                 ))}
               </TableRow>
             ))}

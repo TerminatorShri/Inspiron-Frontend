@@ -46,6 +46,9 @@ export default function QueryBuilder() {
   const [selectedTable, setSelectedTable] = useState("sales");
   const [selectedFields, setSelectedFields] = useState([]);
   const [selectedMode, setSelectedMode] = useState("singleTable");
+  const [showResults, setShowResults] = useState(false);
+  const [sqlQuery, setSqlQuery] = useState("");
+
   const fieldOptions = schemas[selectedTable].map((field) => ({
     value: field.name,
     label: `${field.name} (${field.type})`,
@@ -58,8 +61,15 @@ export default function QueryBuilder() {
         {queryModes.map((mode) => (
           <Button
             key={mode.id}
-            variant={selectedMode === mode.id ? "default" : "outline"}
-            onClick={() => setSelectedMode(mode.id)}
+            className={`px-4 py-2 rounded-lg ${
+              selectedMode === mode.id
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+            }`}
+            onClick={() => {
+              setSelectedMode(mode.id);
+              setShowResults(false);
+            }}
           >
             {mode.title}
           </Button>
@@ -67,7 +77,7 @@ export default function QueryBuilder() {
       </div>
 
       {/* Dynamic Form Based on Selected Mode */}
-      <Card className="bg-muted text-foreground p-6 shadow-lg border">
+      <Card className="bg-white text-gray-900 p-6 shadow-lg border rounded-lg">
         <CardHeader className="text-lg font-semibold border-b pb-2">
           {queryModes.find((q) => q.id === selectedMode)?.title}
         </CardHeader>
@@ -78,10 +88,10 @@ export default function QueryBuilder() {
               <div className="grid grid-cols-3 gap-4 items-center">
                 <span className="font-medium">FROM</span>
                 <Select value={selectedTable} onValueChange={setSelectedTable}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full border border-gray-300">
                     <SelectValue placeholder="Select Table" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white">
                     {Object.keys(schemas).map((table) => (
                       <SelectItem key={table} value={table}>
                         {table}
@@ -115,7 +125,10 @@ export default function QueryBuilder() {
 
               <div className="grid grid-cols-3 gap-4 items-center">
                 <span className="font-medium">LIMIT</span>
-                <Input placeholder="e.g., 100" />
+                <Input
+                  placeholder="e.g., 100"
+                  className="w-full border border-gray-300"
+                />
               </div>
             </>
           )}
@@ -126,10 +139,10 @@ export default function QueryBuilder() {
               <div className="grid grid-cols-3 gap-4 items-center">
                 <span className="font-medium">SELECT FROM</span>
                 <Select value={selectedTable} onValueChange={setSelectedTable}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full border border-gray-300">
                     <SelectValue placeholder="Select Table" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white">
                     {Object.keys(schemas).map((table) => (
                       <SelectItem key={table} value={table}>
                         {table}
@@ -140,8 +153,11 @@ export default function QueryBuilder() {
               </div>
 
               <div className="grid grid-cols-3 gap-4 items-center">
-                <span className="font-medium">WHERE</span>
-                <Input placeholder="e.g., amount > (SELECT AVG(amount) FROM sales)" />
+                <span className="font-medium">WHERE Condition</span>
+                <Input
+                  placeholder="e.g., amount > (SELECT AVG(amount) FROM sales)"
+                  className="w-full border border-gray-300"
+                />
               </div>
             </>
           )}
@@ -152,10 +168,10 @@ export default function QueryBuilder() {
               <div className="grid grid-cols-3 gap-4 items-center">
                 <span className="font-medium">Main Table</span>
                 <Select value={selectedTable} onValueChange={setSelectedTable}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full border border-gray-300">
                     <SelectValue placeholder="Select Table" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white">
                     {Object.keys(schemas).map((table) => (
                       <SelectItem key={table} value={table}>
                         {table}
@@ -168,7 +184,7 @@ export default function QueryBuilder() {
               <div className="grid grid-cols-3 gap-4 items-center">
                 <span className="font-medium">JOIN Type</span>
                 <Select>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full border border-gray-300">
                     <SelectValue placeholder="Select Join Type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -180,24 +196,11 @@ export default function QueryBuilder() {
               </div>
 
               <div className="grid grid-cols-3 gap-4 items-center">
-                <span className="font-medium">Join Table</span>
-                <Select>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select Table" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.keys(schemas).map((table) => (
-                      <SelectItem key={table} value={table}>
-                        {table}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="grid grid-cols-3 gap-4 items-center">
                 <span className="font-medium">ON Condition</span>
-                <Input placeholder="e.g., sales.customer = orders.customer_name" />
+                <Input
+                  placeholder="e.g., sales.id = "
+                  className="w-full border border-gray-300"
+                />
               </div>
             </>
           )}
@@ -209,25 +212,40 @@ export default function QueryBuilder() {
               <textarea
                 className="w-full h-32 p-3 border rounded-md"
                 placeholder="Write your SQL query here..."
+                value={sqlQuery}
+                onChange={(e) => setSqlQuery(e.target.value)}
               />
+            </div>
+          )}
+
+          {/* EXECUTE QUERY BUTTON */}
+          <div className="flex justify-center">
+            <Button
+              onClick={() => setShowResults(true)}
+              className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg"
+            >
+              Execute Query
+            </Button>
+          </div>
+
+          {/* RESULT BLOCK */}
+          {showResults && (
+            <div className="mt-6 p-4 bg-gray-100 border rounded-lg shadow-md">
+              <h3 className="text-lg font-semibold">Query Results</h3>
+              <p className="text-gray-600">Results will be displayed here...</p>
             </div>
           )}
         </CardContent>
       </Card>
 
-      {/* Bottom-Right Badge */}
-      <div className="fixed bottom-8 right-8">
+      {/* Bottom-Right Trino Badge */}
+      <div className="fixed bottom-6 right-6">
         <Badge
           variant="outline"
-          className="px-4 py-2 text-base flex items-center gap-2 border-gray-400 bg-white shadow-lg rounded-xl"
+          className="px-4 py-2 text-sm flex items-center gap-2 border-gray-400 bg-white shadow-lg rounded-xl"
         >
           <span className="text-lg font-semibold">Powered by</span>
-          <img
-            src={TrinoLogo}
-            alt="Trino Logo"
-            className="w-auto"
-            style={{ height: "35px" }}
-          />
+          <img src={TrinoLogo} alt="Trino Logo" className="h-6 w-auto" />
         </Badge>
       </div>
     </div>
