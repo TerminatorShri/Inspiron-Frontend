@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -12,6 +17,7 @@ import ReactSelect from "react-select";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import TrinoLogo from "@/assets/trino-logo.svg";
+import { CircularProgress, Chip } from "@heroui/react";
 
 // Query Modes
 const queryModes = [
@@ -48,11 +54,17 @@ export default function QueryBuilder() {
   const [selectedMode, setSelectedMode] = useState("singleTable");
   const [showResults, setShowResults] = useState(false);
   const [sqlQuery, setSqlQuery] = useState("");
+  const [executionTime, setExecutionTime] = useState(null);
 
   const fieldOptions = schemas[selectedTable].map((field) => ({
     value: field.name,
     label: `${field.name} (${field.type})`,
   }));
+
+  const executeQuery = () => {
+    setShowResults(true);
+    setExecutionTime((Math.random() * 5 + 1).toFixed(2)); // Simulating execution time between 1-6 seconds
+  };
 
   return (
     <div className="max-w-5xl mx-auto mt-8 relative min-h-screen">
@@ -230,9 +242,61 @@ export default function QueryBuilder() {
 
           {/* RESULT BLOCK */}
           {showResults && (
-            <div className="mt-6 p-4 bg-gray-100 border rounded-lg shadow-md">
-              <h3 className="text-lg font-semibold">Query Results</h3>
-              <p className="text-gray-600">Results will be displayed here...</p>
+            <div className="mt-6">
+              {/* Query Results Card */}
+              <Card className="p-4 bg-white border rounded-lg shadow-md">
+                <h3 className="text-lg font-semibold">Query Results</h3>
+                <p className="text-gray-600">
+                  Results will be displayed here...
+                </p>
+              </Card>
+
+              {/* Pruning Efficiency & Query Execution Time Side by Side */}
+              <div className="flex flex-row gap-6 justify-center mt-6">
+                {/* Progress Indicator for Pruning Efficiency */}
+                <Card
+                  className="w-[240px] h-[240px] border-none flex flex-col items-center justify-center"
+                  style={{ backgroundColor: "rgb(23,47,98)" }}
+                >
+                  <CardContent className="flex flex-col items-center justify-center pb-0 relative">
+                    <CircularProgress
+                      classNames={{
+                        svg: "w-36 h-36 drop-shadow-md",
+                        indicator: "stroke-white",
+                        track: "stroke-white/10",
+                      }}
+                      showValueLabel={false} // Hide default label to prevent overlap
+                      strokeWidth={4}
+                      value={70} // Simulated value
+                    />
+                    {/* Centered Percentage Value */}
+                    <span className="absolute text-3xl font-semibold text-white">
+                      70%
+                    </span>
+                  </CardContent>
+                  <CardFooter className="justify-center items-center pt-0">
+                    <Chip
+                      classNames={{
+                        base: "border-1 border-white/30",
+                        content: "text-white/90 text-small font-semibold",
+                      }}
+                      variant="bordered"
+                    >
+                      Pruning Efficiency
+                    </Chip>
+                  </CardFooter>
+                </Card>
+
+                {/* Query Execution Time */}
+                <div className="p-5 bg-gray-100 border rounded-lg flex flex-col items-center justify-center w-60 shadow-md">
+                  <h4 className="text-lg font-semibold">
+                    Query Execution Time
+                  </h4>
+                  <p className="text-gray-700 text-2xl font-bold mt-2">
+                    {executionTime ? `${executionTime} sec` : "Calculating..."}
+                  </p>
+                </div>
+              </div>
             </div>
           )}
         </CardContent>
