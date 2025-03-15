@@ -8,6 +8,7 @@ import KeyMetrics from "@/components/KeyMetrics";
 import SettingsPage from "@/components/SettingsPage";
 import QueryBuilder from "@/components/QueryBuilder";
 import { Toaster } from "sonner";
+import SchemaViewer from "@/components/SchemaViewer";
 
 export default function MetadataPage() {
   const [selectedTable, setSelectedTable] = useState("Sales");
@@ -43,6 +44,9 @@ export default function MetadataPage() {
               )}
               {activeSection === "Key Metrics" && (
                 <KeyMetrics selectedTable={selectedTable} />
+              )}
+              {activeSection === "Schema Viewer" && (
+                <SchemaViewer selectedTable={selectedTable} />
               )}
               {activeSection === "Run Query" && <QueryBuilder />}
             </div>

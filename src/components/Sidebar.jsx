@@ -4,6 +4,7 @@ import {
   Package,
   Settings,
   List,
+  Table2,
   Layers,
   History,
   BarChart,
@@ -18,34 +19,42 @@ const ELEMENTS = [
     id: "1",
     isSelectable: false,
     name: "Tables",
-    children: ["Sales", "Orders", "Transactions"].map((tableName, index) => ({
-      id: `${index + 2}`,
-      isSelectable: true,
-      name: tableName,
-      children: [
-        {
-          id: `schemas-${tableName}`,
-          name: "Schemas",
-          icon: <List className="w-4 h-4 mr-2 text-blue-400" />,
-        },
-        {
-          id: `properties-${tableName}`,
-          name: "Properties",
-          icon: <Info className="w-4 h-4 mr-2 text-blue-400" />,
-        },
-      
-        {
-          id: `versioning-${tableName}`,
-          name: "Versioning & Snapshots",
-          icon: <History className="w-4 h-4 mr-2 text-blue-400" />,
-        },
-        {
-          id: `metrics-${tableName}`,
-          name: "Key Metrics",
-          icon: <BarChart className="w-4 h-4 mr-2 text-blue-400" />,
-        },
-      ],
-    })),
+    children: [
+      ...["Sales", "Orders", "Transactions"].map((tableName, index) => ({
+        id: `${index + 2}`,
+        isSelectable: true,
+        name: tableName,
+        children: [
+          {
+            id: `schemas-${tableName}`,
+            name: "Schemas",
+            icon: <List className="w-4 h-4 mr-2 text-blue-400" />,
+          },
+          {
+            id: `properties-${tableName}`,
+            name: "Properties",
+            icon: <Info className="w-4 h-4 mr-2 text-blue-400" />,
+          },
+          {
+            id: `versioning-${tableName}`,
+            name: "Versioning & Snapshots",
+            icon: <History className="w-4 h-4 mr-2 text-blue-400" />,
+          },
+          {
+            id: `metrics-${tableName}`,
+            name: "Key Metrics",
+            icon: <BarChart className="w-4 h-4 mr-2 text-blue-400" />,
+          },
+        ],
+      })),
+      // Add Schema Viewer inside Tables
+      {
+        id: "schema-viewer",
+        isSelectable: true,
+        name: "Schema Viewer",
+        icon: <Table2 className="w-4 h-4 mr-2 text-blue-400" />,
+      },
+    ],
   },
   {
     id: "execute-sql",
@@ -87,38 +96,50 @@ export default function Sidebar({
         >
           {/* Tables Section */}
           <Folder element="Tables" value="1" className="p-1 text-lg">
-            {ELEMENTS[0].children.map((table) => (
-              <Folder
-                key={table.id}
-                value={table.id}
-                element={table.name}
-                className={`p-2 rounded-lg transition text-md ${
-                  selectedTable === table.name
-                    ? "bg-blue-600/30 text-white font-bold"
-                    : "hover:bg-blue-500/20"
-                }`}
-                onClick={() => setSelectedTable(table.name)}
-              >
-                {table.children.map((option) => (
-                  <File
-                    key={option.id}
-                    value={option.id}
-                    className={`p-2 pl-6 rounded-lg transition kanit-regular ${
-                      option.name === selectedTable
-                        ? "bg-blue-600/20 text-white font-bold"
-                        : "hover:bg-blue-500/20"
-                    }`}
-                    onClick={() => {
-                      setActiveSection(option.name);
-                      setIsSettingsOpen(false);
-                    }}
-                    fileIcon={option.icon}
-                  >
-                    {option.name}
-                  </File>
-                ))}
-              </Folder>
-            ))}
+            {ELEMENTS[0].children.map((item) =>
+              item.children ? (
+                <Folder
+                  key={item.id}
+                  value={item.id}
+                  element={item.name}
+                  className={`p-2 rounded-lg transition text-md ${
+                    selectedTable === item.name
+                      ? "bg-blue-600/30 text-white font-bold"
+                      : "hover:bg-blue-500/20"
+                  }`}
+                  onClick={() => setSelectedTable(item.name)}
+                >
+                  {item.children.map((option) => (
+                    <File
+                      key={option.id}
+                      value={option.id}
+                      className={`p-2 pl-6 rounded-lg transition kanit-regular ${
+                        option.name === selectedTable
+                          ? "bg-blue-600/20 text-white font-bold"
+                          : "hover:bg-blue-500/20"
+                      }`}
+                      onClick={() => {
+                        setActiveSection(option.name);
+                        setIsSettingsOpen(false);
+                      }}
+                      fileIcon={option.icon}
+                    >
+                      {option.name}
+                    </File>
+                  ))}
+                </Folder>
+              ) : (
+                <File
+                  key={item.id}
+                  value={item.id}
+                  className="p-2 rounded-lg transition hover:bg-blue-500/20"
+                  fileIcon={item.icon}
+                  onClick={() => setActiveSection("Schema Viewer")}
+                >
+                  {item.name}
+                </File>
+              )
+            )}
           </Folder>
 
           {/* Execute SQL Section */}
