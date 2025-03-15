@@ -82,7 +82,7 @@ export default function Sidebar({
 
       <div className="flex-grow overflow-y-auto mt-4 scrollbar-thin scrollbar-thumb-blue-500 scroll-smooth">
         <Tree
-          className="text-gray-300"
+          className="text-gray-300 kanit-medium"
           initialSelectedId="2"
           initialExpandedItems={["1", "execute-sql"]}
           elements={ELEMENTS}
@@ -107,7 +107,7 @@ export default function Sidebar({
                   <File
                     key={option.id}
                     value={option.id}
-                    className={`p-2 pl-6 rounded-lg transition ${
+                    className={`p-2 pl-6 rounded-lg transition kanit-regular ${
                       option.name === selectedTable
                         ? "bg-blue-600/20 text-white font-bold"
                         : "hover:bg-blue-500/20"
@@ -152,7 +152,7 @@ export default function Sidebar({
         className="flex items-center gap-2 p-4 text-gray-300 hover:bg-blue-500/20 rounded transition mt-2"
       >
         <Settings className="w-5 h-5 text-blue-400" />
-        <span>Settings</span>
+        <span className="kanit-medium">Settings</span>
       </button>
     </div>
   );
