@@ -33,11 +33,7 @@ const ELEMENTS = [
           name: "Properties",
           icon: <Info className="w-4 h-4 mr-2 text-blue-400" />,
         },
-        {
-          id: `partitions-${tableName}`,
-          name: "Partition Details",
-          icon: <Layers className="w-4 h-4 mr-2 text-blue-400" />,
-        },
+      
         {
           id: `versioning-${tableName}`,
           name: "Versioning & Snapshots",

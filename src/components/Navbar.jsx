@@ -4,13 +4,13 @@ export default function Navbar({ activeSection, setActiveSection }) {
   const sections = [
     { id: "schema", label: "Table Schema" },
     { id: "properties", label: "Table Properties" },
-    { id: "partitions", label: "Partition Details" },
     { id: "versioning", label: "Versioning & Snapshots" },
     { id: "metrics", label: "Key Metrics" },
   ];
 
   return (
     <Menubar className="bg-gray-200 p-2 rounded shadow flex">
+      console.log(sections);
       {sections.map((section) => (
         <MenubarMenu key={section.id}>
           <MenubarTrigger
