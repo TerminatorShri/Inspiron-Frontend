@@ -75,22 +75,7 @@ export default function TableProperties() {
           </AccordionItem>
 
           {/* Transaction Logs */}
-          <AccordionItem value="transactions">
-            <AccordionTrigger className="text-lg font-semibold flex items-center gap-2">
-              <FolderOpen className="w-5 h-5 text-blue-600" />
-              Transaction Logs
-            </AccordionTrigger>
-            <AccordionContent className="p-3 bg-gray-50 rounded">
-              {transactionLogs.map((log, index) => (
-                <p
-                  key={index}
-                  className="flex items-center gap-2 text-gray-700"
-                >
-                  <FileText className="w-4 h-4 text-blue-500" /> {log}
-                </p>
-              ))}
-            </AccordionContent>
-          </AccordionItem>
+         
         </Accordion>
       </div>
     </div>
